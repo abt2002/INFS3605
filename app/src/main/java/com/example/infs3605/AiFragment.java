@@ -31,6 +31,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import com.example.infs3605.adapter.MessageAdapter;
 
 public class AiFragment extends Fragment {
 
