@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.infs3605.database.UserDatabaseSQLite;
+import com.example.infs3605.model.Session;
 
 public class Login extends AppCompatActivity {
 
@@ -49,8 +54,25 @@ public class Login extends AppCompatActivity {
     }
 
     private void doLogin(){
+        String username = edUser.getText().toString();
+        String password = edPass.getText().toString();
+        if (username.trim().equals("")) {
+            Toast.makeText(getApplicationContext(), "username not be null", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (password.trim().equals("")) {
+            Toast.makeText(getApplicationContext(), "password not be null", Toast.LENGTH_LONG).show();
+            return;
+        }
+        UserDatabaseSQLite sqLite = new UserDatabaseSQLite(getApplicationContext());
+        Boolean success = sqLite.checkusernamepassword(username, password);
+        if (success) {
+            Session.setCurrent(username);
+            Intent intent = new Intent(this, Main.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(getApplicationContext(), "username / password error", Toast.LENGTH_LONG).show();
+        }
 
-        Intent intent = new Intent(this, Main.class);
-        startActivity(intent);
     }
 }

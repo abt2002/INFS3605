@@ -1,5 +1,6 @@
 package com.example.infs3605;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,12 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.infs3605.database.HistoryDatabaseSQLite;
 import com.example.infs3605.model.Message;
 import com.example.infs3605.adapter.MessageAdapter;
 
@@ -32,6 +35,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import com.example.infs3605.adapter.MessageAdapter;
+import com.example.infs3605.model.Session;
+import com.example.infs3605.util.TimeUtil;
 
 public class AiFragment extends Fragment {
 
@@ -41,10 +46,12 @@ public class AiFragment extends Fragment {
     ImageView send_btn;
     List<Message> messageList = new ArrayList<>();
     MessageAdapter messageAdapter;
+    HistoryDatabaseSQLite sqLite;
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     OkHttpClient client = new OkHttpClient();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,9 +75,13 @@ public class AiFragment extends Fragment {
         recyclerView.setAdapter(messageAdapter);
         //====================================
 
+        sqLite = new HistoryDatabaseSQLite(getContext());
+
+
         send_btn.setOnClickListener(view -> {
             String question = message_text_text.getText().toString().trim();
             addToChat(question,Message.SEND_BY_ME);
+            sqLite.insertData(Session.getCurrent(), question, TimeUtil.getCurrentTime(), Message.SEND_BY_ME);
             message_text_text.setText("");
             callAPI(question);
         });
@@ -93,6 +104,7 @@ public class AiFragment extends Fragment {
 
     void addResponse(String response){
         messageList.remove(messageList.size()-1);
+        sqLite.insertData(Session.getCurrent(), response, TimeUtil.getCurrentTime(), Message.SEND_BY_BOT);
         addToChat(response, Message.SEND_BY_BOT);
     } // addResponse End Here =======
 
@@ -123,6 +135,7 @@ public class AiFragment extends Fragment {
                 addResponse("Failed to load response due to"+e.getMessage());
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()){

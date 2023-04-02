@@ -8,13 +8,12 @@
     tools:context=".AiFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/toolbar"
         android:background="@android:color/white"
         android:elevation="4dp"
-        app:title="@string/app_name"
-        />
+        app:title="@string/app_name" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

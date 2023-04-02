@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-public class userdatabaseSQLite extends SQLiteOpenHelper{
+public class UserDatabaseSQLite extends SQLiteOpenHelper{
     public static final String DBNAME="login.db";
-    public userdatabaseSQLite(Context context) {
+    public UserDatabaseSQLite(Context context) {
         super(context, "login.db", null, 1);
     }
     //create database
