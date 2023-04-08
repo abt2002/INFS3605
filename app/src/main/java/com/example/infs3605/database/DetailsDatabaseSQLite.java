@@ -12,7 +12,7 @@ import java.util.List;
 public class DetailsDatabaseSQLite extends SQLiteOpenHelper {
 
     public DetailsDatabaseSQLite(Context context) {
-        super(context, "history.db", null, 1);
+        super(context, "details.db", null, 1);
     }
 
 
@@ -55,7 +55,7 @@ public class DetailsDatabaseSQLite extends SQLiteOpenHelper {
        String where = "username=?";
        String[] whereArgs = new String[] {String.valueOf(username)};
 
-       long result = db.update("Details", values, where, whereArgs);
+       long result = db.update("details", values, where, whereArgs);
         if(result==-1) return false;
         else
             return true;
@@ -63,7 +63,7 @@ public class DetailsDatabaseSQLite extends SQLiteOpenHelper {
 
     public Details selectDetails(String username){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from history where username=?", new String[]{username});
+        Cursor cursor = db.rawQuery("select * from details where username=?", new String[]{username});
         if (cursor.moveToNext()) {
             String usernam = cursor.getString(0);
             String faculty = cursor.getString(1);
