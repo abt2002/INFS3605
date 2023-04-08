@@ -15,6 +15,8 @@ import com.example.infs3605.model.Session;
 
 public class Login extends AppCompatActivity {
 
+    public static String sessionUsername;
+
     private EditText edUser;
 
     private EditText edPass;
@@ -55,6 +57,7 @@ public class Login extends AppCompatActivity {
 
     private void doLogin(){
         String username = edUser.getText().toString();
+        sessionUsername = username;
         String password = edPass.getText().toString();
         if (username.trim().equals("")) {
             Toast.makeText(getApplicationContext(), "username not be null", Toast.LENGTH_LONG).show();
@@ -74,5 +77,9 @@ public class Login extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "username / password error", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    public static String getUsername(){
+        return sessionUsername;
     }
 }
