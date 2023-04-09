@@ -74,11 +74,17 @@ public class DetailEdit extends AppCompatActivity {
                     sqLite.updateData(username, faculty, coursea, courseb, coursec);
                     Details details = sqLite.selectDetails(username);
                     Toast.makeText(getApplicationContext(), "Details updated successfully", Toast.LENGTH_LONG).show();
-
                 } catch (Exception e) {
+                   //ignore
+                }
+
+                try {
                     sqLite.insertData(username, faculty, coursea, courseb, coursec);
                     Toast.makeText(getApplicationContext(), "Details saved for new user: " + username, Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    //ignore
                 }
+
                 Intent intent = new Intent(DetailEdit.this, Main.class);
                 startActivity(intent);
             }
