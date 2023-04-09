@@ -50,8 +50,16 @@ public class ProfileFragment extends Fragment {
             txtCourseA.setText(details.getCoursea());
             txtCourseB.setText(details.getCourseb());
             txtCourseC.setText(details.getCoursec());
+            Toast.makeText(getActivity().getApplicationContext(), details.getFaculty(), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             //ignore
+            //Toast.makeText(getActivity().getApplicationContext(),"failed",Toast.LENGTH_LONG).show();
+        }
+
+        try {
+            Toast.makeText(getActivity().getApplicationContext(), details.getFaculty(), Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getActivity().getApplicationContext(), "failed to get faculty", Toast.LENGTH_LONG).show();
         }
 
 

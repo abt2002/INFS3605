@@ -18,7 +18,7 @@ public class DetailsDatabaseSQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table details(username TEXT, faculty TEXT, coursea TEXT, courseb TEXT, coursec TEXT)");
+        db.execSQL("create table details(username TEXT UNIQUE, faculty TEXT, coursea TEXT, courseb TEXT, coursec TEXT)");
 
     }
 
@@ -45,19 +45,22 @@ public class DetailsDatabaseSQLite extends SQLiteOpenHelper {
     public Boolean updateData(String username, String faculty, String coursea, String courseb, String coursec){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("username", username);
         values.put("faculty", faculty);
         values.put("coursea", coursea);
         values.put("courseb", courseb);
         values.put("coursec", coursec);
 
        String where = "username=?";
-       String[] whereArgs = new String[] {String.valueOf(username)};
+       String[] whereArgs = new String[] {username};
 
        long result = db.update("details", values, where, whereArgs);
-        if(result==-1) return false;
-        else
+        if (result > 0) {
+            // At least one row has been updated
             return true;
+        } else {
+            // No rows have been updated
+            return false;
+        }
     };
 
     public Details selectDetails(String username){

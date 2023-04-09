@@ -33,24 +33,39 @@ public class DetailEdit extends AppCompatActivity {
         deCourse3 = this.findViewById(R.id.deCourse3);
         deSub = this.findViewById(R.id.deSub);
 
+
+        DetailsDatabaseSQLite sqLite = new DetailsDatabaseSQLite(getApplicationContext());
+        String username = Login.getUsername();
+
+        //Preload user details into the EditText boxes, if they exist.
+        try {
+            Details detailsA = sqLite.selectDetails(username);
+            deFaculty.setHint(detailsA.getFaculty());
+            deCourse1.setHint(detailsA.getCoursea());
+            deCourse2.setHint(detailsA.getCourseb());
+            deCourse3.setHint(detailsA.getCoursec());
+        } catch (Exception e) {
+            //ignore
+        }
+
     //Submits the new user details
         deSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = Login.getUsername();
                 String faculty = deFaculty.getText().toString();
                 String coursea = deCourse1.getText().toString();
                 String courseb = deCourse2.getText().toString();
                 String coursec = deCourse3.getText().toString();
 
-                DetailsDatabaseSQLite sqLite = new DetailsDatabaseSQLite(getApplicationContext());
                 //Check if user details already exist
                 try {
-                    sqLite.insertData(username, faculty, coursea, courseb, coursec);
-                } catch (Exception e) {
                     sqLite.updateData(username, faculty, coursea, courseb, coursec);
                     Details details = sqLite.selectDetails(username);
                     Toast.makeText(getApplicationContext(), details.getFaculty(), Toast.LENGTH_LONG).show();
+
+                } catch (Exception e) {
+                    sqLite.insertData(username, faculty, coursea, courseb, coursec);
+                    Toast.makeText(getApplicationContext(), "new entry in details database with username: " + username, Toast.LENGTH_LONG).show();
                 }
 
                 Details details = sqLite.selectDetails(username);
