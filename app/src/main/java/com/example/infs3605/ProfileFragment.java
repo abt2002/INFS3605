@@ -16,8 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.example.infs3605.database.Details;
 import com.example.infs3605.database.DetailsDatabaseSQLite;
 
-import com.example.infs3605.databinding.FragmentProfileBinding;
-
 import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
@@ -34,7 +32,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root =  inflater.inflate(R.layout.fragment_profile, container, false);
-        txtName = root.findViewById(R.id.txtName);
         txtFaculty = root.findViewById(R.id.txtFaculty);
         txtCourseA = root.findViewById(R.id.txtCourseA);
         txtCourseB = root.findViewById(R.id.txtCourseB);
@@ -46,20 +43,13 @@ public class ProfileFragment extends Fragment {
         Details details = sqLite.selectDetails(Login.getUsername());
 
         try {
-            txtFaculty.setText(details.getFaculty());
-            txtCourseA.setText(details.getCoursea());
-            txtCourseB.setText(details.getCourseb());
-            txtCourseC.setText(details.getCoursec());
-            Toast.makeText(getActivity().getApplicationContext(), details.getFaculty(), Toast.LENGTH_LONG).show();
+            txtFaculty.setText("Faculty: " + details.getFaculty());
+            txtCourseA.setText("Course 1: " + details.getCoursea());
+            txtCourseB.setText("Course 2: " + details.getCourseb());
+            txtCourseC.setText("Course 3: " + details.getCoursec());
+            Toast.makeText(getActivity().getApplicationContext(), "Information loaded successfully", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            //ignore
-            //Toast.makeText(getActivity().getApplicationContext(),"failed",Toast.LENGTH_LONG).show();
-        }
-
-        try {
-            Toast.makeText(getActivity().getApplicationContext(), details.getFaculty(), Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Toast.makeText(getActivity().getApplicationContext(), "failed to get faculty", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(),"Failed to load information",Toast.LENGTH_LONG).show();
         }
 
 

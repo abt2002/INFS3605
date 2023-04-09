@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.infs3605.database.UserDatabaseSQLite;
@@ -25,6 +26,8 @@ public class Login extends AppCompatActivity {
 
     private Button stLogin;
 
+    private ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,7 @@ public class Login extends AppCompatActivity {
         edPass = findViewById(R.id.edPass);
         stReg = findViewById(R.id.stReg);
         stLogin = findViewById(R.id.stLogin);
+        imageView = findViewById(R.id.imageView);
 
         stReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,11 +64,11 @@ public class Login extends AppCompatActivity {
         sessionUsername = username;
         String password = edPass.getText().toString();
         if (username.trim().equals("")) {
-            Toast.makeText(getApplicationContext(), "username not be null", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Username cannot be null", Toast.LENGTH_LONG).show();
             return;
         }
         if (password.trim().equals("")) {
-            Toast.makeText(getApplicationContext(), "password not be null", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Password cannot be null", Toast.LENGTH_LONG).show();
             return;
         }
         UserDatabaseSQLite sqLite = new UserDatabaseSQLite(getApplicationContext());
@@ -74,7 +78,7 @@ public class Login extends AppCompatActivity {
             Intent intent = new Intent(this, Main.class);
             startActivity(intent);
         } else {
-            Toast.makeText(getApplicationContext(), "username / password error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Username/password error", Toast.LENGTH_LONG).show();
         }
 
     }

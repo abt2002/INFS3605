@@ -2,6 +2,7 @@ package com.example.infs3605;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -23,6 +24,8 @@ public class DetailEdit extends AppCompatActivity {
     private EditText deCourse3;
     private Button deSub;
 
+    private Button deBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,7 @@ public class DetailEdit extends AppCompatActivity {
         deCourse2 = this.findViewById(R.id.deCourse2);
         deCourse3 = this.findViewById(R.id.deCourse3);
         deSub = this.findViewById(R.id.deSub);
+        deBack = this.findViewById(R.id.deBack);
 
 
         DetailsDatabaseSQLite sqLite = new DetailsDatabaseSQLite(getApplicationContext());
@@ -40,14 +44,22 @@ public class DetailEdit extends AppCompatActivity {
         //Preload user details into the EditText boxes, if they exist.
         try {
             Details detailsA = sqLite.selectDetails(username);
-            deFaculty.setHint(detailsA.getFaculty());
-            deCourse1.setHint(detailsA.getCoursea());
-            deCourse2.setHint(detailsA.getCourseb());
-            deCourse3.setHint(detailsA.getCoursec());
+            deFaculty.setHint("Faculty: " + detailsA.getFaculty());
+            deCourse1.setHint("Course 1: " + detailsA.getCoursea());
+            deCourse2.setHint("Course 2: " + detailsA.getCourseb());
+            deCourse3.setHint("Course 3: " + detailsA.getCoursec());
         } catch (Exception e) {
             //ignore
         }
 
+    //Back button functionality
+        deBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailEdit.this, Main.class);
+                startActivity(intent);
+            }
+        });
     //Submits the new user details
         deSub.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,14 +73,14 @@ public class DetailEdit extends AppCompatActivity {
                 try {
                     sqLite.updateData(username, faculty, coursea, courseb, coursec);
                     Details details = sqLite.selectDetails(username);
-                    Toast.makeText(getApplicationContext(), details.getFaculty(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Details updated successfully", Toast.LENGTH_LONG).show();
 
                 } catch (Exception e) {
                     sqLite.insertData(username, faculty, coursea, courseb, coursec);
-                    Toast.makeText(getApplicationContext(), "new entry in details database with username: " + username, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Details saved for new user: " + username, Toast.LENGTH_LONG).show();
                 }
-
-                Details details = sqLite.selectDetails(username);
+                Intent intent = new Intent(DetailEdit.this, Main.class);
+                startActivity(intent);
             }
         });
 
