@@ -7,12 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.infs3605.database.Details;
+import com.example.infs3605.database.DetailsDatabaseSQLite;
+
 import com.example.infs3605.databinding.FragmentProfileBinding;
+
+import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
@@ -34,6 +40,20 @@ public class ProfileFragment extends Fragment {
         txtCourseB = root.findViewById(R.id.txtCourseB);
         txtCourseC = root.findViewById(R.id.txtCourseC);
         btEdit = root.findViewById(R.id.btEdit);
+
+        DetailsDatabaseSQLite sqLite = new DetailsDatabaseSQLite(getActivity().getApplicationContext());
+
+        Details details = sqLite.selectDetails(Login.getUsername());
+
+        try {
+            txtFaculty.setText(details.getFaculty());
+            txtCourseA.setText(details.getCoursea());
+            txtCourseB.setText(details.getCourseb());
+            txtCourseC.setText(details.getCoursec());
+        } catch (Exception e) {
+            //ignore
+        }
+
 
         btEdit.setOnClickListener(new View.OnClickListener() {
             //Switch to the detail edit screen.

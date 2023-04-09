@@ -18,7 +18,7 @@ public class DetailsDatabaseSQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table details(username TEXT , fullname TEXT, faculty TEXT, coursea TEXT, courseb TEXT, coursec TEXT)");
+        db.execSQL("create table details(username TEXT, faculty TEXT, coursea TEXT, courseb TEXT, coursec TEXT)");
 
     }
 
@@ -27,11 +27,10 @@ public class DetailsDatabaseSQLite extends SQLiteOpenHelper {
         db.execSQL("drop table if exists details");
     }
 
-    public Boolean insertData(String username, String fullname, String faculty, String coursea, String courseb, String coursec){
+    public Boolean insertData(String username, String faculty, String coursea, String courseb, String coursec){
         SQLiteDatabase db= this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("username", username);
-        values.put("fullname", fullname);
         values.put("faculty", faculty);
         values.put("coursea", coursea);
         values.put("courseb", courseb);
