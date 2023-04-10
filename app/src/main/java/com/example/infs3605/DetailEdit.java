@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.infs3605.database.Details;
@@ -26,6 +27,8 @@ public class DetailEdit extends AppCompatActivity {
 
     private Button deBack;
 
+    private ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,7 @@ public class DetailEdit extends AppCompatActivity {
         deCourse3 = this.findViewById(R.id.deCourse3);
         deSub = this.findViewById(R.id.deSub);
         deBack = this.findViewById(R.id.deBack);
+        imageView = findViewById(R.id.imageView3);
 
 
         DetailsDatabaseSQLite sqLite = new DetailsDatabaseSQLite(getApplicationContext());
