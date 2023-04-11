@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">INFS3605</string>
-    <string name="facebook_app_id">1234</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
-    <string name="facebook_client_token">56789</string>
+    <string name="facebook_app_id">618044003683161</string>
+    <string name="fb_login_protocol_scheme">fb618044003683161</string>
+    <string name="facebook_client_token">cb1242ec75755851a72da308f3f849bd</string>
 
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.infs3605;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -56,6 +57,8 @@ public class Register extends AppCompatActivity {
                     Boolean success = sqLite.insertData(username, password, "brown", "james", "demo@gmail.com");
                     if (success) {
                         Toast.makeText(getApplicationContext(), "register success", Toast.LENGTH_LONG).show();
+                        Intent myIntent = new Intent(Register.this, Main.class);
+                        startActivity(myIntent);
                     } else {
                         Toast.makeText(getApplicationContext(), "register failed", Toast.LENGTH_LONG).show();
                     }
